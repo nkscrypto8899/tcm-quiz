@@ -35,26 +35,54 @@
   header {
     background: linear-gradient(135deg, #8b1a1a 0%, #c0392b 60%, #d4a017 100%);
     color: #fff;
-    padding: 18px 20px 14px;
+    padding: 14px 16px 12px;
     position: sticky; top: 0; z-index: 100;
     box-shadow: 0 3px 16px rgba(139,26,26,.35);
   }
-  header h1 {
-    font-size: 20px; font-weight: 700; letter-spacing: 1px;
-    display: flex; align-items: center; gap: 8px;
+  .header-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
   }
-  header h1 span.icon { font-size: 24px; }
+  header h1 {
+    font-size: 19px; font-weight: 700; letter-spacing: 1px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  header h1 .icon { font-size: 22px; }
   #total-badge {
-    margin-top: 6px;
+    margin-top: 5px;
     font-size: 13px; opacity: .85;
   }
-  #total-badge b { font-size: 15px; color: #ffe082; }
+  #total-badge b { font-size: 14px; color: #ffe082; }
+
+  /* ── Lang toggle ── */
+  #langToggle {
+    display: flex;
+    background: rgba(255,255,255,.18);
+    border-radius: 50px;
+    border: 1.5px solid rgba(255,255,255,.4);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .lang-btn {
+    padding: 6px 13px;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer; color: rgba(255,255,255,.7);
+    border: none; background: none;
+    transition: all .2s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    letter-spacing: .5px;
+  }
+  .lang-btn.active {
+    background: #fff;
+    color: var(--accent);
+    border-radius: 50px;
+  }
 
   /* ── Search bar ── */
   .search-wrap {
-    padding: 14px 16px 8px;
+    padding: 12px 14px 8px;
     background: var(--bg);
-    position: sticky; top: 74px; z-index: 90;
+    position: sticky; top: 72px; z-index: 90;
     border-bottom: 1px solid var(--border);
   }
   .search-row {
@@ -80,15 +108,13 @@
 
   /* ── Filter pills ── */
   .filter-wrap {
-    padding: 10px 16px 6px;
+    padding: 9px 14px 6px;
     background: var(--bg);
-    position: sticky; top: 145px; z-index: 89;
+    position: sticky; top: 141px; z-index: 89;
     border-bottom: 1px solid var(--border);
   }
-  .filter-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 600; letter-spacing: .5px; }
-  .pills {
-    display: flex; flex-wrap: wrap; gap: 6px;
-  }
+  .filter-label { font-size: 12px; color: var(--muted); margin-bottom: 5px; font-weight: 600; letter-spacing: .5px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; }
   .pill {
     padding: 6px 14px;
     border-radius: 50px;
@@ -101,19 +127,17 @@
     user-select: none;
   }
   .pill.active { border-color: var(--accent); background: var(--accent); color: #fff; font-weight: 600; }
-  .pill.type-单.active  { background: var(--blue);  border-color: var(--blue); }
-  .pill.type-多.active  { background: var(--green); border-color: var(--green); }
-  .pill.type-判.active  { background: var(--gold);  border-color: var(--gold); color: #2c1810; }
+  .pill.type-单.active, .pill.type-單.active { background: var(--blue);  border-color: var(--blue); }
+  .pill.type-多.active                        { background: var(--green); border-color: var(--green); }
+  .pill.type-判.active                        { background: var(--gold);  border-color: var(--gold); color: #2c1810; }
 
-  .divider { height: 1px; background: var(--border); margin: 8px 0 6px; }
+  .divider { height: 1px; background: var(--border); margin: 7px 0 5px; }
 
-  /* ── Results area ── */
+  /* ── Results ── */
   #results {
     padding: 12px 14px 40px;
     display: flex; flex-direction: column; gap: 10px;
   }
-
-  /* ── Empty state ── */
   #emptyState {
     text-align: center; padding: 60px 20px; color: var(--muted);
     display: none;
@@ -121,7 +145,7 @@
   #emptyState .big { font-size: 52px; margin-bottom: 14px; }
   #emptyState p { font-size: 16px; }
 
-  /* ── Question card ── */
+  /* ── Card ── */
   .qcard {
     background: var(--card);
     border-radius: var(--radius);
@@ -133,7 +157,6 @@
   }
   .qcard:active { box-shadow: 0 1px 4px rgba(0,0,0,.08); }
 
-  /* card top meta bar */
   .qcard-meta {
     display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
     padding: 9px 14px 8px;
@@ -149,13 +172,11 @@
   }
   .badge-type {
     font-size: 12px; font-weight: 700;
-    border-radius: 8px; padding: 2px 8px;
-    color: #fff;
+    border-radius: 8px; padding: 2px 8px; color: #fff;
   }
-  .badge-type.单 { background: var(--blue); }
-  .badge-type.多 { background: var(--green); }
-  .badge-type.判 { background: var(--gold); color: #2c1810; }
-
+  .badge-type.单, .badge-type.單 { background: var(--blue); }
+  .badge-type.多                  { background: var(--green); }
+  .badge-type.判                  { background: var(--gold); color: #2c1810; }
   .badge-main {
     background: #ede0c8; color: var(--accent);
     font-size: 12px; font-weight: 600;
@@ -163,8 +184,7 @@
   }
   .badge-sub {
     background: #e8f0e8; color: #2d6a2d;
-    font-size: 11px;
-    border-radius: 8px; padding: 2px 8px;
+    font-size: 11px; border-radius: 8px; padding: 2px 8px;
   }
   .badge-hint {
     margin-left: auto;
@@ -175,39 +195,25 @@
     max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
 
-  /* question body */
-  .qcard-body {
-    padding: 12px 14px;
-    cursor: pointer;
-  }
-  .qtext {
-    font-size: 16px; line-height: 1.6; font-weight: 500;
-    color: var(--text);
-  }
-  .qtext mark {
-    background: #fff176; color: inherit; border-radius: 3px; padding: 0 1px;
-  }
+  .qcard-body { padding: 12px 14px; cursor: pointer; }
+  .qtext { font-size: 16px; line-height: 1.65; font-weight: 500; color: var(--text); }
+  .qtext mark { background: #fff176; color: inherit; border-radius: 3px; padding: 0 1px; }
 
-  /* expand toggle hint */
   .expand-hint {
-    margin-top: 8px;
-    font-size: 12px; color: var(--muted);
+    margin-top: 8px; font-size: 12px; color: var(--muted);
     display: flex; align-items: center; gap: 4px;
   }
   .arrow { transition: transform .2s; display: inline-block; }
   .qcard.open .arrow { transform: rotate(180deg); }
 
-  /* options & answer - hidden by default */
   .qcard-detail {
-    display: none;
-    padding: 0 14px 14px;
+    display: none; padding: 0 14px 14px;
     border-top: 1px dashed var(--border);
   }
   .qcard.open .qcard-detail { display: block; }
 
   .opts-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: grid; grid-template-columns: 1fr 1fr;
     gap: 7px; margin-top: 12px;
   }
   .opts-grid.single-col { grid-template-columns: 1fr; }
@@ -218,32 +224,23 @@
     border: 1.5px solid transparent;
     font-size: 14px; line-height: 1.5;
   }
-  .opt-item.correct {
-    background: #e8f5e9;
-    border-color: var(--green);
-  }
-  .opt-key {
-    font-weight: 800; font-size: 15px;
-    min-width: 20px; color: var(--muted);
-  }
+  .opt-item.correct { background: #e8f5e9; border-color: var(--green); }
+  .opt-key { font-weight: 800; font-size: 15px; min-width: 20px; color: var(--muted); }
   .opt-item.correct .opt-key { color: var(--green); }
   .opt-val { color: var(--text); }
 
-  /* answer banner */
   .ans-banner {
-    margin-top: 12px;
-    padding: 10px 14px;
-    border-radius: 10px;
+    margin-top: 12px; padding: 10px 14px; border-radius: 10px;
     font-size: 15px; font-weight: 700;
     display: flex; align-items: center; gap: 8px;
   }
-  .ans-banner.单  { background: #e3f2fd; color: #1565c0; }
-  .ans-banner.多  { background: #e8f5e9; color: #1b5e20; }
-  .ans-banner.判对 { background: #e8f5e9; color: #1b5e20; }
-  .ans-banner.判错 { background: #fce4ec; color: #880e4f; }
-  .ans-banner .ans-icon { font-size: 20px; }
+  .ans-banner.单, .ans-banner.單 { background: #e3f2fd; color: #1565c0; }
+  .ans-banner.多                  { background: #e8f5e9; color: #1b5e20; }
+  .ans-banner.ans-t               { background: #e8f5e9; color: #1b5e20; }
+  .ans-banner.ans-f               { background: #fce4ec; color: #880e4f; }
+  .ans-banner .ans-icon           { font-size: 20px; }
 
-  /* scroll-to-top */
+  /* ── Top button ── */
   #topBtn {
     position: fixed; bottom: 28px; right: 20px;
     background: var(--accent); color: #fff;
@@ -252,22 +249,19 @@
     box-shadow: 0 4px 16px rgba(139,26,26,.4);
     cursor: pointer; display: none; z-index: 200;
     -webkit-tap-highlight-color: transparent;
+    align-items: center; justify-content: center;
   }
 
-  /* loading */
-  #loading {
-    text-align: center; padding: 60px 20px;
-    color: var(--muted); font-size: 16px;
-  }
+  #loading { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 16px; }
 
   @media (min-width: 768px) {
-    header h1 { font-size: 24px; }
+    header h1 { font-size: 22px; }
     #results { padding: 16px 20px 60px; gap: 14px; }
     .qtext { font-size: 17px; }
     .opt-item { font-size: 15px; }
   }
   @media (min-width: 1024px) {
-    body { max-width: 900px; margin: 0 auto; }
+    body { max-width: 920px; margin: 0 auto; }
     header { border-radius: 0 0 16px 16px; }
   }
 </style>
@@ -275,7 +269,13 @@
 <body>
 
 <header>
-  <h1><span class="icon">🏥</span>中醫全科理療師 題庫</h1>
+  <div class="header-top">
+    <h1><span class="icon">🏥</span>中醫全科理療師 題庫</h1>
+    <div id="langToggle">
+      <button class="lang-btn active" data-lang="tw" onclick="setLang('tw')">繁體</button>
+      <button class="lang-btn"        data-lang="sc" onclick="setLang('sc')">简体</button>
+    </div>
+  </div>
   <div id="total-badge">共 <b id="totalCount">—</b> 題｜顯示 <b id="showCount">—</b> 題</div>
 </header>
 
@@ -313,17 +313,52 @@
 <button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script src="questions_data.js"></script>
+<script src="questions_data_tw.js"></script>
 <script>
 // ── State ──────────────────────────────────────────────────────────────────
+let lang       = 'tw';   // 'tw' | 'sc'
 let filterType = '';
 let filterMain = '';
 let searchText = '';
 let openCards  = new Set();
 
+function getDataset() { return lang === 'tw' ? QUESTIONS_TW : QUESTIONS; }
+
+// ── Language switch ────────────────────────────────────────────────────────
+function setLang(l) {
+  if (lang === l) return;
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === l);
+  });
+  // reset filters & rebuild
+  filterType = '';
+  filterMain = '';
+  openCards.clear();
+  rebuildMainPills();
+  resetTypePills();
+  render();
+}
+
+function resetTypePills() {
+  document.querySelectorAll('#typePills .pill').forEach((p, i) => {
+    p.classList.toggle('active', i === 0);
+  });
+}
+
 // ── Init ───────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
-  buildMainPills();
-  render();
+  rebuildMainPills();
+
+  document.getElementById('typePills').addEventListener('click', e => {
+    const p = e.target.closest('.pill');
+    if (!p) return;
+    filterType = p.dataset.val;
+    document.querySelectorAll('#typePills .pill').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    openCards.clear();
+    render();
+  });
 
   document.getElementById('searchInput').addEventListener('input', e => {
     searchText = e.target.value.trim();
@@ -341,12 +376,15 @@ window.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', () => {
     document.getElementById('topBtn').style.display = window.scrollY > 400 ? 'flex' : 'none';
   });
+
+  render();
 });
 
-// ── Build main-category pills ───────────────────────────────────────────────
-function buildMainPills() {
-  const mains = [...new Set(QUESTIONS.map(q => q.main))].sort();
+// ── Build / rebuild main-category pills ────────────────────────────────────
+function rebuildMainPills() {
   const wrap = document.getElementById('mainPills');
+  wrap.innerHTML = '<div class="pill active" data-val="">全部</div>';
+  const mains = [...new Set(getDataset().map(q => q.main))].sort();
   mains.forEach(m => {
     const p = document.createElement('div');
     p.className = 'pill';
@@ -354,17 +392,8 @@ function buildMainPills() {
     p.textContent = m;
     wrap.appendChild(p);
   });
-
-  document.getElementById('typePills').addEventListener('click', e => {
-    const p = e.target.closest('.pill');
-    if (!p) return;
-    filterType = p.dataset.val;
-    document.querySelectorAll('#typePills .pill').forEach(x => x.classList.remove('active'));
-    p.classList.add('active');
-    openCards.clear();
-    render();
-  });
-  document.getElementById('mainPills').addEventListener('click', e => {
+  filterMain = '';
+  wrap.addEventListener('click', e => {
     const p = e.target.closest('.pill');
     if (!p) return;
     filterMain = p.dataset.val;
@@ -378,7 +407,7 @@ function buildMainPills() {
 // ── Filter ─────────────────────────────────────────────────────────────────
 function filtered() {
   const kw = searchText.toLowerCase();
-  return QUESTIONS.filter(q => {
+  return getDataset().filter(q => {
     if (filterType && q.type !== filterType) return false;
     if (filterMain && q.main !== filterMain) return false;
     if (!kw) return true;
@@ -395,17 +424,17 @@ function hl(text) {
   return escHtml(text).replace(new RegExp(kw, 'gi'), m => `<mark>${m}</mark>`);
 }
 function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 // ── Render ─────────────────────────────────────────────────────────────────
 function render() {
   const list = filtered();
-  document.getElementById('totalCount').textContent = QUESTIONS.length;
+  const ds   = getDataset();
+  document.getElementById('totalCount').textContent = ds.length;
   document.getElementById('showCount').textContent  = list.length;
 
   const results = document.getElementById('results');
-  // remove old cards
   results.querySelectorAll('.qcard').forEach(c => c.remove());
   document.getElementById('loading').style.display = 'none';
 
@@ -428,16 +457,19 @@ function buildCard(q) {
 
   const sub = (q.sub && q.sub !== '—') ? `<span class="badge-sub">${escHtml(q.sub)}</span>` : '';
 
-  // Answer display
   let ansBannerHtml = '';
   let optsHtml = '';
 
+  const isTW = lang === 'tw';
+
   if (q.type === '判') {
-    const cls = q.ans === '对' ? '判对' : '判错';
-    const icon = q.ans === '对' ? '✅' : '❌';
-    ansBannerHtml = `<div class="ans-banner ${cls}"><span class="ans-icon">${icon}</span>答案：${q.ans}</div>`;
+    // answer is 对/對 or 错/錯
+    const isTrue = q.ans === '对' || q.ans === '對';
+    const cls    = isTrue ? 'ans-t' : 'ans-f';
+    const icon   = isTrue ? '✅' : '❌';
+    const label  = isTrue ? (isTW ? '正確' : '对') : (isTW ? '錯誤' : '错');
+    ansBannerHtml = `<div class="ans-banner ${cls}"><span class="ans-icon">${icon}</span>${isTW ? '答案：' : '答案：'}${label}</div>`;
   } else {
-    // Build options
     const keys = Object.keys(q.opts);
     const longText = keys.some(k => q.opts[k].length > 14);
     const correctKeys = q.ans.split('');
@@ -451,15 +483,18 @@ function buildCard(q) {
     }).join('');
     optsHtml = `<div class="${gridClass}">${optItems}</div>`;
 
-    const typeCls = q.type === '多' ? '多' : '单';
-    const icon = q.type === '多' ? '✅' : '🎯';
-    ansBannerHtml = `<div class="ans-banner ${typeCls}"><span class="ans-icon">${icon}</span>正確答案：<b>${q.ans}</b></div>`;
+    const typeCls = q.type === '多' ? '多' : (isTW ? '單' : '单');
+    const icon    = q.type === '多' ? '✅' : '🎯';
+    ansBannerHtml = `<div class="ans-banner ${typeCls}"><span class="ans-icon">${icon}</span>${isTW ? '正確答案：' : '正确答案：'}<b>${q.ans}</b></div>`;
   }
+
+  const typeLabel = q.type === '单' ? '單選' : q.type === '多' ? '多選' : '判斷';
+  const expandHint = isTW ? '點擊查看答案' : '点击查看答案';
 
   card.innerHTML = `
     <div class="qcard-meta">
       <span class="badge-num">#${q.id}</span>
-      <span class="badge-type ${q.type}">${q.type === '单' ? '單選' : q.type === '多' ? '多選' : '判斷'}</span>
+      <span class="badge-type ${q.type}">${typeLabel}</span>
       <span class="badge-main">${escHtml(q.main)}</span>
       ${sub}
       <span class="badge-hint">💡 ${escHtml(q.hint)}</span>
@@ -467,7 +502,7 @@ function buildCard(q) {
     <div class="qcard-body">
       <div class="qtext">${hl(q.q)}</div>
       <div class="expand-hint">
-        <span>點擊查看答案</span>
+        <span>${expandHint}</span>
         <span class="arrow">▼</span>
       </div>
     </div>
@@ -476,7 +511,6 @@ function buildCard(q) {
       ${ansBannerHtml}
     </div>`;
 
-  // click to toggle
   card.querySelector('.qcard-meta').addEventListener('click', () => toggle(card, q.id));
   card.querySelector('.qcard-body').addEventListener('click', () => toggle(card, q.id));
 

@@ -465,29 +465,23 @@ function buildCard(q) {
   const isTW = lang === 'tw';
 
   if (q.type === '判') {
-    // answer is 对/對 or 错/錯
     const isTrue = q.ans === '对' || q.ans === '對';
     const cls    = isTrue ? 'ans-t' : 'ans-f';
     const icon   = isTrue ? '✅' : '❌';
     const label  = isTrue ? (isTW ? '正確' : '对') : (isTW ? '錯誤' : '错');
-    ansBannerHtml = `<div class="ans-banner ${cls}"><span class="ans-icon">${icon}</span>${isTW ? '答案：' : '答案：'}${label}</div>`;
+    ansBannerHtml = `<div class="ans-banner ${cls}"><span class="ans-icon">${icon}</span>${label}</div>`;
   } else {
-    const keys = Object.keys(q.opts);
-    const longText = keys.some(k => q.opts[k].length > 14);
+    // Only show correct options, hide wrong ones
     const correctKeys = q.ans.split('');
-    const gridClass = longText ? 'opts-grid single-col' : 'opts-grid';
-    const optItems = keys.map(k => {
-      const isCorrect = correctKeys.includes(k);
-      return `<div class="opt-item${isCorrect ? ' correct' : ''}">
+    const correctItems = correctKeys.map(k => {
+      const val = q.opts[k] || '';
+      return `<div class="opt-item correct">
         <span class="opt-key">${k}</span>
-        <span class="opt-val">${hl(q.opts[k])}</span>
+        <span class="opt-val">${hl(val)}</span>
       </div>`;
     }).join('');
-    optsHtml = `<div class="${gridClass}">${optItems}</div>`;
-
-    const typeCls = q.type === '多' ? '多' : (isTW ? '單' : '单');
-    const icon    = q.type === '多' ? '✅' : '🎯';
-    ansBannerHtml = `<div class="ans-banner ${typeCls}"><span class="ans-icon">${icon}</span>${isTW ? '正確答案：' : '正确答案：'}<b>${q.ans}</b></div>`;
+    optsHtml = `<div class="opts-grid single-col">${correctItems}</div>`;
+    ansBannerHtml = '';
   }
 
   const typeLabel = q.type === '单' ? '單選' : q.type === '多' ? '多選' : '判斷';

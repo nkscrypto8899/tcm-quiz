@@ -199,18 +199,12 @@
   .qtext { font-size: 16px; line-height: 1.65; font-weight: 500; color: var(--text); }
   .qtext mark { background: #fff176; color: inherit; border-radius: 3px; padding: 0 1px; }
 
-  .expand-hint {
-    margin-top: 8px; font-size: 12px; color: var(--muted);
-    display: flex; align-items: center; gap: 4px;
-  }
-  .arrow { transition: transform .2s; display: inline-block; }
-  .qcard.open .arrow { transform: rotate(180deg); }
+  .expand-hint { display: none; }
 
   .qcard-detail {
-    display: none; padding: 0 14px 14px;
+    display: block; padding: 0 14px 14px;
     border-top: 1px dashed var(--border);
   }
-  .qcard.open .qcard-detail { display: block; }
 
   .opts-grid {
     display: grid; grid-template-columns: 1fr 1fr;
@@ -320,9 +314,22 @@ let lang       = 'tw';   // 'tw' | 'sc'
 let filterType = '';
 let filterMain = '';
 let searchText = '';
-let openCards  = new Set();
 
 function getDataset() { return lang === 'tw' ? QUESTIONS_TW : QUESTIONS; }
+
+// ── Sort order ─────────────────────────────────────────────────────────────
+const TYPE_ORDER = { '单': 0, '多': 1, '判': 2 };
+function sorted(list) {
+  return [...list].sort((a, b) => {
+    const t = (TYPE_ORDER[a.type] ?? 9) - (TYPE_ORDER[b.type] ?? 9);
+    if (t !== 0) return t;
+    const m = a.main.localeCompare(b.main, 'zh');
+    if (m !== 0) return m;
+    const s = a.sub.localeCompare(b.sub, 'zh');
+    if (s !== 0) return s;
+    return a.id - b.id;
+  });
+}
 
 // ── Language switch ────────────────────────────────────────────────────────
 function setLang(l) {
@@ -331,10 +338,8 @@ function setLang(l) {
   document.querySelectorAll('.lang-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === l);
   });
-  // reset filters & rebuild
   filterType = '';
   filterMain = '';
-  openCards.clear();
   rebuildMainPills();
   resetTypePills();
   render();
@@ -356,21 +361,18 @@ window.addEventListener('DOMContentLoaded', () => {
     filterType = p.dataset.val;
     document.querySelectorAll('#typePills .pill').forEach(x => x.classList.remove('active'));
     p.classList.add('active');
-    openCards.clear();
     render();
   });
 
   document.getElementById('searchInput').addEventListener('input', e => {
     searchText = e.target.value.trim();
     document.getElementById('clearBtn').style.display = searchText ? 'block' : 'none';
-    openCards.clear();
     render();
   });
   document.getElementById('clearBtn').addEventListener('click', () => {
     document.getElementById('searchInput').value = '';
     searchText = '';
     document.getElementById('clearBtn').style.display = 'none';
-    openCards.clear();
     render();
   });
   window.addEventListener('scroll', () => {
@@ -399,15 +401,14 @@ function rebuildMainPills() {
     filterMain = p.dataset.val;
     document.querySelectorAll('#mainPills .pill').forEach(x => x.classList.remove('active'));
     p.classList.add('active');
-    openCards.clear();
     render();
   });
 }
 
-// ── Filter ─────────────────────────────────────────────────────────────────
+// ── Filter + sort ──────────────────────────────────────────────────────────
 function filtered() {
   const kw = searchText.toLowerCase();
-  return getDataset().filter(q => {
+  const list = getDataset().filter(q => {
     if (filterType && q.type !== filterType) return false;
     if (filterMain && q.main !== filterMain) return false;
     if (!kw) return true;
@@ -415,6 +416,7 @@ function filtered() {
                  ...Object.values(q.opts)].join(' ').toLowerCase();
     return hay.includes(kw);
   });
+  return sorted(list);
 }
 
 // ── Highlight ──────────────────────────────────────────────────────────────
@@ -452,7 +454,7 @@ function render() {
 // ── Build card ─────────────────────────────────────────────────────────────
 function buildCard(q) {
   const card = document.createElement('div');
-  card.className = 'qcard' + (openCards.has(q.id) ? ' open' : '');
+  card.className = 'qcard';
   card.dataset.id = q.id;
 
   const sub = (q.sub && q.sub !== '—') ? `<span class="badge-sub">${escHtml(q.sub)}</span>` : '';
@@ -489,7 +491,6 @@ function buildCard(q) {
   }
 
   const typeLabel = q.type === '单' ? '單選' : q.type === '多' ? '多選' : '判斷';
-  const expandHint = isTW ? '點擊查看答案' : '点击查看答案';
 
   card.innerHTML = `
     <div class="qcard-meta">
@@ -501,26 +502,13 @@ function buildCard(q) {
     </div>
     <div class="qcard-body">
       <div class="qtext">${hl(q.q)}</div>
-      <div class="expand-hint">
-        <span>${expandHint}</span>
-        <span class="arrow">▼</span>
-      </div>
     </div>
     <div class="qcard-detail">
       ${optsHtml}
       ${ansBannerHtml}
     </div>`;
 
-  card.querySelector('.qcard-meta').addEventListener('click', () => toggle(card, q.id));
-  card.querySelector('.qcard-body').addEventListener('click', () => toggle(card, q.id));
-
   return card;
-}
-
-function toggle(card, id) {
-  card.classList.toggle('open');
-  if (card.classList.contains('open')) openCards.add(id);
-  else openCards.delete(id);
 }
 </script>
 </body>
